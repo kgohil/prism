@@ -26,11 +26,10 @@ def handleMissingVals(trainData):
 
 def main():
     dataList = fetchData('weather.nominal.data')
-    trainData = dataList[:]
-    #trainData = handleMissingVals(trainData)
-    #testData = dataList[8:]
+    trainData = dataList[0:8]
+    testData = dataList[8:]
     model = prism(trainData)
-    #predictedList = predict(model,testData)
+    predictedList = predict(model,testData)
     displayModel(model)
 
 
