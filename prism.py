@@ -2,27 +2,10 @@ import random
 import sys
 from operator import itemgetter
 
-
-def displayModel(model):
-    for rule,targetClass in model:
-        print(str(rule.items())+'-->'+targetClass+"\n")
-
-
-def handleMissingVals(trainData):
-    #fetch nominal attrbutes in each column
-    n = len(trainData[0])
-    attrDict= dict()
-    for col in range(0,n):
-
-        attrList = []
-        for data in trainData:
-            if data[col] in trainData:
-                attrList[data[col]] = attrList[data[col]] + 1
-            else:
-                attrList[data[col]] = 1
-        attrDict[col] = attrList
-
-
+__version__ = "1.0"
+__license__ = "MIT"
+__author__ = "Kushal Gohil"
+__author_email__ = "kushal.gohil@rutgers.edu"
 
 def main():
     dataList = fetchData('weather.nominal.data')
@@ -31,6 +14,11 @@ def main():
     model = prism(trainData)
     predictedList = predict(model,testData)
     displayModel(model)
+
+#Displays the prism Rules generated that form the model
+def displayModel(model):
+    for rule,targetClass in model:
+        print(str(rule.items())+'-->'+targetClass+"\n")
 
 
 #predicts and prints the results using the model and the test data
@@ -57,6 +45,22 @@ def fetchData(fileName):
         subList = l.strip().split(',')
         datalist.append(subList)
     return datalist
+
+#Handles Missing Values
+def handleMissingVals(trainData):
+    #fetch nominal attrbutes in each column
+    n = len(trainData[0])
+    attrDict= dict()
+    for col in range(0,n):
+
+        attrList = []
+        for data in trainData:
+            if data[col] in trainData:
+                attrList[data[col]] = attrList[data[col]] + 1
+            else:
+                attrList[data[col]] = 1
+        attrDict[col] = attrList
+
 
 #implements seperate and conquer and returns a model(a list of rule,class combination)
 def prism(data):
